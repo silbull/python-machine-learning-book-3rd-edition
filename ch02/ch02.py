@@ -91,19 +91,19 @@ class Perceptron(object):
     Parameters
     ------------
     eta : float
-      Learning rate (between 0.0 and 1.0)
+      Learning rate (between 0.0 and 1.0) //学習率
     n_iter : int
-      Passes over the training dataset.
+      Passes over the training dataset.//訓練データの訓練回数
     random_state : int
-      Random number generator seed for random weight
+      Random number generator seed for random weight //重みを初期化するための乱数シード
       initialization.
 
     Attributes
     -----------
     w_ : 1d-array
-      Weights after fitting.
+      Weights after fitting. 適合後の重み
     errors_ : list
-      Number of misclassifications (updates) in each epoch.
+      Number of misclassifications (updates) in each epoch. //各エポックでの誤分類の数(エポックは訓練データ全体を何度繰り返し学習するか。２だったら２回)
 
     """
     def __init__(self, eta=0.01, n_iter=50, random_state=1):
@@ -112,13 +112,13 @@ class Perceptron(object):
         self.random_state = random_state
 
     def fit(self, X, y):
-        """Fit training data.
+        """Fit training data. //訓練データに適合させる
 
         Parameters
         ----------
         X : {array-like}, shape = [n_examples, n_features]
           Training vectors, where n_examples is the number of examples and
-          n_features is the number of features.
+          n_features is the number of features. //n_featuresは特徴量
         y : array-like, shape = [n_examples]
           Target values.
 
@@ -127,8 +127,8 @@ class Perceptron(object):
         self : object
 
         """
-        rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1])
+        rgen = np.random.RandomState(self.random_state) #乱数の種の初期化
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1]) #正規分布
         self.errors_ = []
 
         for _ in range(self.n_iter):
@@ -143,7 +143,7 @@ class Perceptron(object):
 
     def net_input(self, X):
         """Calculate net input"""
-        return np.dot(X, self.w_[1:]) + self.w_[0]
+        return np.dot(X, self.w_[1:]) + self.w_[0] #np.dotは内積計算。wTx + w[0] 出力の計算をしてる　
 
     def predict(self, X):
         """Return class label after unit step"""
